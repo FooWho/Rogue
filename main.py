@@ -5,7 +5,6 @@ import traceback
 import tcod
 
 import color
-
 from engine import Engine
 import entity_factories
 from procgen import generate_dungeon
@@ -41,9 +40,8 @@ def main() -> None:
         map_height=map_height,
         max_monsters_per_room=max_monsters_per_room,
         max_items_per_room=max_items_per_room,
-        engine = engine,
+        engine=engine,
     )
-
     engine.update_fov()
 
     engine.message_log.add_message(
@@ -62,13 +60,13 @@ def main() -> None:
             root_console.clear()
             engine.event_handler.on_render(console=root_console)
             context.present(root_console)
-            
+
             try:
                 for event in tcod.event.wait():
                     context.convert_event(event)
                     engine.event_handler.handle_events(event)
-            except Exception:   # Handle exceptions in game.
-                traceback.print_exc()   # Print error to stderr.
+            except Exception:  # Handle exceptions in game.
+                traceback.print_exc()  # Print error to stderr.
                 # Then print the error to the message log.
                 engine.message_log.add_message(traceback.format_exc(), color.error)
 

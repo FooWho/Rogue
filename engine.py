@@ -8,7 +8,10 @@ from tcod.map import compute_fov
 import exceptions
 from input_handlers import MainGameEventHandler
 from message_log import MessageLog
-from render_functions import render_bar, render_names_at_mouse_location
+from render_functions import (
+    render_bar,
+    render_names_at_mouse_location,
+)
 
 if TYPE_CHECKING:
     from entity import Actor
@@ -31,10 +34,10 @@ class Engine:
                 try:
                     entity.ai.perform()
                 except exceptions.Impossible:
-                    pass   # Ignore impossible action exceptions from AI
+                    pass  # Ignore impossible action exceptions from AI.
 
     def update_fov(self) -> None:
-        """Recompute the visible area based on the player's point of view."""
+        """Recompute the visible area based on the players point of view."""
         self.game_map.visible[:] = compute_fov(
             self.game_map.tiles["transparent"],
             (self.player.x, self.player.y),
@@ -42,7 +45,7 @@ class Engine:
         )
         # If a tile is "visible" it should be added to "explored".
         self.game_map.explored |= self.game_map.visible
-    
+
     def render(self, console: Console) -> None:
         self.game_map.render(console)
 
@@ -53,6 +56,6 @@ class Engine:
             current_value=self.player.fighter.hp,
             maximum_value=self.player.fighter.max_hp,
             total_width=20,
-       )
-        
+        )
+
         render_names_at_mouse_location(console=console, x=21, y=44, engine=self)
