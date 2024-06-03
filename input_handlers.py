@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, TYPE_CHECKING
+from typing import Callable, Optional, Tuple, TYPE_CHECKING
 
 import tcod
 from tcod import libtcodpy
@@ -235,8 +235,8 @@ class SelectIndexHandler(AskUserEventHandler):
         """Highlight the tile under the cursor."""
         super().on_render(console)
         x, y = self.engine.mouse_location
-        console.tiles_rgb["bg"][x, y] = color.white
-        console.tiles_rgb["fg"][x, y] = color.black
+        console.rgb["bg"][x, y] = color.white
+        console.rgb["fg"][x, y] = color.black
 
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[Action]:
         """Check for key movement or confirmation keys."""
@@ -282,6 +282,51 @@ class LookHandler(SelectIndexHandler):
         """Return to main handler."""
         self.engine.event_handler = MainGameEventHandler(self.engine)
 
+class SingleRangedAttackHandler(SelectIndexHandler):
+    """Handles targeting a single enemy. Only the enemy selected will be affected."""
+
+    def __init__(
+        self, engine: Engine, callback: Callable[[Tuple[int, int]], Optional[Action]]
+    ):
+        super().__init__(engine)
+
+        self.callback = callback
+
+    def on_index_selected(self, x: int, y: int) -> Optional[Action]:
+        return self.callback((x, y))
+
+class AreaRangedAttackHandler(SelectIndexHandler):
+    """Handles targeting an area within a given radius. Any entity within the area will be affected."""
+
+    def __init__(
+        self,
+        engine: Engine,
+        radius: int,
+        callback: Callable[[Tuple[int, int]], Optional[Action]],
+   ):
+        super().__init__(engine)
+
+        self.radius = radius
+        self.callback = callback
+
+    def on_render(self, console: tcod.Console) -> None:
+        """Highlight the tile under the cursor."""
+        super().on_render(console)
+
+        x, y = self.engine.mouse_location
+
+        # Draw a rectangle around the targeted area, so the player can see the affected tiles.
+        console.draw_frame(
+            x=x - self.radius - 1,
+            y=y - self.radius - 1,
+            width=self.radius ** 2,
+            height=self.radius ** 2,
+            fg=color.red,
+            clear=False,
+        )
+
+    def on_index_selected(self, x: int, y: int) -> Optional[Action]:
+        return self.callback((x, y))
 
 class MainGameEventHandler(EventHandler):
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[Action]:
