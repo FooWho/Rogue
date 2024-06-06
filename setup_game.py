@@ -49,6 +49,10 @@ def new_game() -> Engine:
         "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
     )
 
+    engine.message_log.add_message(
+        "This is the first extension.", color.welcome_text
+    )
+
     dagger = copy.deepcopy(entity_factories.dagger)
     leather_armor = copy.deepcopy(entity_factories.leather_armor)
 
