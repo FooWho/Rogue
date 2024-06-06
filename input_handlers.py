@@ -250,8 +250,8 @@ class LevelUpEventHandler(AskUserEventHandler):
         console.draw_frame(
             x=x,
             y=0,
-            width=35,
-            height=8,
+            width=40,
+            height=9,
             title=self.TITLE,
             clear=True,
             fg=(255, 255, 255),
@@ -274,7 +274,12 @@ class LevelUpEventHandler(AskUserEventHandler):
         console.print(
             x=x + 1,
             y=6,
-            string=f"c) Agility (+1 defense, from {self.engine.player.fighter.defense})",
+            string=f"c) Toughness (+1 mitigation, from {self.engine.player.fighter.mitigation})",
+        )
+        console.print(
+            x=x + 1,
+            y=7,
+            string=f"d) Agility (+1 avoidance, from {self.engine.player.fighter.avoidance})",
         )
 
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
@@ -282,13 +287,16 @@ class LevelUpEventHandler(AskUserEventHandler):
         key = event.sym
         index = key - tcod.event.KeySym.a
 
-        if 0 <= index <= 2:
+        if 0 <= index <= 3:
             if index == 0:
                 player.level.increase_max_hp()
             elif index == 1:
                 player.level.increase_power()
+            elif index == 2:
+                player.level.increase_mitigation()
             else:
-                player.level.increase_defense()
+                player.level.increase_avoidance()
+            
         else:
             self.engine.message_log.add_message("Invalid entry.", color.invalid)
 

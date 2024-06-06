@@ -60,6 +60,13 @@ lightning_scroll = Item(
     consumable=consumable.LightningDamageConsumable(damage=20, maximum_range=5),
 )
 
+fireball_scroll = Item(
+    char="~",
+    color=(255, 0, 0),
+    name="Fireball Scroll",
+    consumable=consumable.FireballDamageConsumable(damage=12, radius=3),
+)
+
 dagger = Item(
     char="/", 
     color=(0, 191, 255), 
@@ -72,6 +79,13 @@ sword = Item(
     color=(0, 191, 255),
     name="Sword",
     equippable=equippable.Sword(),
+)
+
+great_sword = Item(
+    char="/",
+    color=(0, 191, 255),
+    name="Great Sword",
+    equippable=equippable.GreatSword(),
 )
 
 leather_armor = Item(
@@ -88,9 +102,9 @@ chain_mail = Item(
     equippable=equippable.ChainMail(),
 )
 
-fireball_scroll = Item(
-    char="~",
-    color=(255, 0, 0),
-    name="Fireball Scroll",
-    consumable=consumable.FireballDamageConsumable(damage=12, radius=3),
+plate_mail = Item(
+    char="[",
+    color=(139,69,19),
+    name="Plate Mail",
+    equippable=equippable.PlateMail(),
 )
