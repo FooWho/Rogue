@@ -207,7 +207,7 @@ class CharacterScreenEventHandler(AskUserEventHandler):
             x=x,
             y=y,
             width=width,
-            height=7,
+            height=8,
             title=self.TITLE,
             clear=True,
             fg=(255, 255, 255),
@@ -230,7 +230,10 @@ class CharacterScreenEventHandler(AskUserEventHandler):
             x=x + 1, y=y + 4, string=f"Attack: {self.engine.player.fighter.power}"
         )
         console.print(
-            x=x + 1, y=y + 5, string=f"Defense: {self.engine.player.fighter.defense}"
+            x=x + 1, y=y + 5, string=f"Mitigation: {self.engine.player.fighter.mitigation}"
+        )
+        console.print(
+            x=x + 1, y=y + 6, string=f"Avoidance: {self.engine.player.fighter.avoidance}"
         )
 
 class LevelUpEventHandler(AskUserEventHandler):
