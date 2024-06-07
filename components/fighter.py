@@ -13,12 +13,13 @@ if TYPE_CHECKING:
 class Fighter(BaseComponent):
     parent: Actor
 
-    def __init__(self, hp: int, base_defense_mitigation: int, base_defense_avoidance: int, base_power: int):
+    def __init__(self, hp: int, base_defense_mitigation: int, base_defense_avoidance: int, base_attack_power: int, base_attack_precision: int):
         self.max_hp = hp
         self._hp = hp
         self.base_defense_mitigation = base_defense_mitigation
         self.base_defense_avoidance = base_defense_avoidance
-        self.base_power = base_power
+        self.base_attack_power = base_attack_power
+        self.base_attack_precision = base_attack_precision
 
     @property
     def hp(self) -> int:
@@ -39,8 +40,12 @@ class Fighter(BaseComponent):
         return self.base_defense_avoidance + self.defense_avoidance_bonus
 
     @property
-    def power(self) -> int:
-        return self.base_power + self.power_bonus
+    def attack_power(self) -> int:
+        return self.base_attack_power + self.attack_power_bonus
+
+    @property
+    def attack_precision(self) -> int:
+        return self.base_attack_precision + self.attack_precision_bonus
 
     @property
     def defense_mitigation_bonus(self) -> int:
@@ -57,9 +62,16 @@ class Fighter(BaseComponent):
             return 0
 
     @property
-    def power_bonus(self) -> int:
+    def attack_power_bonus(self) -> int:
         if self.parent.equipment:
-            return self.parent.equipment.power_bonus
+            return self.parent.equipment.attack_power_bonus
+        else:
+            return 0
+        
+    @property
+    def attack_precision_bonus(self) -> int:
+        if self.parent.equipment:
+            return self.parent.equipment.attack_precision_bonus
         else:
             return 0
 

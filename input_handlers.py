@@ -207,7 +207,7 @@ class CharacterScreenEventHandler(AskUserEventHandler):
             x=x,
             y=y,
             width=width,
-            height=8,
+            height=9,
             title=self.TITLE,
             clear=True,
             fg=(255, 255, 255),
@@ -227,13 +227,16 @@ class CharacterScreenEventHandler(AskUserEventHandler):
         )
 
         console.print(
-            x=x + 1, y=y + 4, string=f"Attack: {self.engine.player.fighter.power}"
+            x=x + 1, y=y + 4, string=f"Power: {self.engine.player.fighter.attack_power}"
         )
         console.print(
-            x=x + 1, y=y + 5, string=f"Mitigation: {self.engine.player.fighter.defense_mitigation}"
+            x=x + 1, y=y + 5, string=f"Precision: {self.engine.player.fighter.attack_precision}"
         )
         console.print(
-            x=x + 1, y=y + 6, string=f"Avoidance: {self.engine.player.fighter.defense_avoidance}"
+            x=x + 1, y=y + 6, string=f"Mitigation: {self.engine.player.fighter.defense_mitigation}"
+        )
+        console.print(
+            x=x + 1, y=y + 7, string=f"Avoidance: {self.engine.player.fighter.defense_avoidance}"
         )
 
 class LevelUpEventHandler(AskUserEventHandler):
@@ -251,7 +254,7 @@ class LevelUpEventHandler(AskUserEventHandler):
             x=x,
             y=0,
             width=40,
-            height=9,
+            height=10,
             title=self.TITLE,
             clear=True,
             fg=(255, 255, 255),
@@ -269,17 +272,22 @@ class LevelUpEventHandler(AskUserEventHandler):
         console.print(
             x=x + 1,
             y=5,
-            string=f"b) Strength (+1 attack, from {self.engine.player.fighter.power})",
+            string=f"b) Strength (+1 power, from {self.engine.player.fighter.attack_power})",
         )
         console.print(
             x=x + 1,
             y=6,
-            string=f"c) Toughness (+1 mitigation, from {self.engine.player.fighter.defense_mitigation})",
+            string=f"c) Dexterity (+1 precision, from {self.engine.player.fighter.attack_precision})",
         )
         console.print(
             x=x + 1,
             y=7,
-            string=f"d) Agility (+1 avoidance, from {self.engine.player.fighter.defense_avoidance})",
+            string=f"d) Toughness (+1 mitigation, from {self.engine.player.fighter.defense_mitigation})",
+        )
+        console.print(
+            x=x + 1,
+            y=8,
+            string=f"e) Agility (+1 avoidance, from {self.engine.player.fighter.defense_avoidance})",
         )
 
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
@@ -287,12 +295,14 @@ class LevelUpEventHandler(AskUserEventHandler):
         key = event.sym
         index = key - tcod.event.KeySym.a
 
-        if 0 <= index <= 3:
+        if 0 <= index <= 4:
             if index == 0:
                 player.level.increase_max_hp()
             elif index == 1:
-                player.level.increase_power()
+                player.level.increase_attack_power()
             elif index == 2:
+                player.level.increase_attack_precision()
+            elif index == 3:
                 player.level.increase_defense_mitigation()
             else:
                 player.level.increase_defense_avoidance()

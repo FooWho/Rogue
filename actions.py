@@ -143,14 +143,26 @@ class MeleeAction(ActionWithDirection):
         target = self.target_actor
         if not target:
             raise exceptions.Impossible("Nothing to attack.")
-
-        damage = self.entity.fighter.power - target.fighter.defense_mitigation
-
+        
         attack_desc = f"{self.entity.name.capitalize()} attacks {target.name}"
         if self.entity is self.engine.player:
             attack_color = color.player_atk
         else:
             attack_color = color.enemy_atk
+
+        chance = self.entity.fighter.attack_precision - target.fighter.defense_avoidance
+
+        if chance >= 0:
+            self.engine.message_log.add_message(
+                f"{attack_desc} and hits!.", attack_color
+            )
+        else:
+            self.engine.message_log.add_message(
+                f"{attack_desc} but misses!.", attack_color
+            )
+            return
+
+        damage = self.entity.fighter.attack_power - target.fighter.defense_mitigation
 
         if damage > 0:
             self.engine.message_log.add_message(
