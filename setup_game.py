@@ -49,8 +49,8 @@ def new_game() -> Engine:
         "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
     )
 
-    starting_weapon = copy.deepcopy(entity_factories.great_sword)
-    starting_armor = copy.deepcopy(entity_factories.plate_mail)
+    starting_weapon = copy.deepcopy(entity_factories.dagger)
+    starting_armor = copy.deepcopy(entity_factories.leather_armor)
 
     starting_weapon.parent = player.inventory
     starting_armor.parent = player.inventory

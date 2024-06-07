@@ -17,6 +17,7 @@ if TYPE_CHECKING:
 max_items_by_floor = [
     (1, 1),
     (4, 2),
+    (6, 3),
 ]
 
 max_monsters_by_floor = [
@@ -30,6 +31,7 @@ item_chances: Dict[int, List[Tuple[Entity, int]]] = {
     2: [(entity_factories.confusion_scroll, 10)],
     4: [(entity_factories.lightning_scroll, 25), (entity_factories.sword, 5)],
     6: [(entity_factories.fireball_scroll, 25), (entity_factories.chain_mail, 15)],
+    8: [(entity_factories.great_sword, 5), (entity_factories.plate_mail, 5)]
 }
 
 enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {

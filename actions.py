@@ -4,6 +4,7 @@ from typing import Optional, Tuple, TYPE_CHECKING
 
 import color
 import exceptions
+import random
 
 if TYPE_CHECKING:
     from engine import Engine
@@ -144,15 +145,31 @@ class MeleeAction(ActionWithDirection):
         if not target:
             raise exceptions.Impossible("Nothing to attack.")
         
-        attack_desc = f"{self.entity.name.capitalize()} attacks {target.name}"
         if self.entity is self.engine.player:
             attack_color = color.player_atk
         else:
             attack_color = color.enemy_atk
+        attack_desc = f"{self.entity.name.capitalize()} attacks {target.name}"
 
         chance = self.entity.fighter.attack_precision - target.fighter.defense_avoidance
 
-        if chance >= 0:
+        match chance:
+            case chance if chance >= 3:
+                chance = random.choices([True, False], [0.9, 0.1])
+            case chance if chance == 2:
+                chance = random.choices([True, False], [0.75, 0.25])
+            case chance if chance == 1:
+                chance = random.choices([True, False], [0.6, 0.4])
+            case chance if chance == 0:
+                chance = random.choices([True, False])
+            case chance if chance == -1:
+                chance = random.choices([True, False], [0.4, 0.6])
+            case chance if chance == -2:
+                chance = random.choices([True, False], [0.25, 0.75])
+            case chance if chance <= -3:
+                chance = random.choices([True, False], [0.1, 0.9])
+
+        if chance[0]:
             self.engine.message_log.add_message(
                 f"{attack_desc} and hits!.", attack_color
             )
@@ -163,7 +180,7 @@ class MeleeAction(ActionWithDirection):
             return
 
         damage = self.entity.fighter.attack_power - target.fighter.defense_mitigation
-
+        attack_desc = f"{self.entity.name.capitalize()} hits {target.name}"
         if damage > 0:
             self.engine.message_log.add_message(
                 f"{attack_desc} for {damage} hit points.", attack_color
