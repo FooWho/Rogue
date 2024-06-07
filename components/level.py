@@ -66,15 +66,15 @@ class Level(BaseComponent):
 
         self.increase_level()
 
-    def increase_mitigation(self, amount: int = 1) -> None:
-        self.parent.fighter.base_mitigation += amount
+    def increase_defense_mitigation(self, amount: int = 1) -> None:
+        self.parent.fighter.base_defense_mitigation += amount
 
         self.engine.message_log.add_message("You are getting tougher!")
 
         self.increase_level()
 
-    def increase_avoidance(self, amount: int = 1) -> None:
-        self.parent.fighter.base_avoidance += amount
+    def increase_defense_avoidance(self, amount: int = 1) -> None:
+        self.parent.fighter.base_defense_avoidance += amount
 
         self.engine.message_log.add_message("Your movements are getting swifter!")
 

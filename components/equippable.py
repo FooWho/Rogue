@@ -16,14 +16,14 @@ class Equippable(BaseComponent):
         self,
         equipment_type: EquipmentType,
         power_bonus: int = 0,
-        mitigation_bonus: int = 0,
-        avoidance_bonus: int = 0,
+        defense_mitigation_bonus: int = 0,
+        defense_avoidance_bonus: int = 0,
     ):
         self.equipment_type = equipment_type
 
         self.power_bonus = power_bonus
-        self.mitigation_bonus = mitigation_bonus
-        self.avoidance_bonus = avoidance_bonus
+        self.defense_mitigation_bonus = defense_mitigation_bonus
+        self.defense_avoidance_bonus = defense_avoidance_bonus
 
 
 class Dagger(Equippable):
@@ -42,14 +42,14 @@ class GreatSword(Equippable):
 
 class LeatherArmor(Equippable):
     def __init__(self) -> None:
-        super().__init__(equipment_type=EquipmentType.ARMOR, mitigation_bonus=1)
+        super().__init__(equipment_type=EquipmentType.ARMOR, defense_mitigation_bonus=1)
 
 
 class ChainMail(Equippable):
     def __init__(self) -> None:
-        super().__init__(equipment_type=EquipmentType.ARMOR, mitigation_bonus=3)
+        super().__init__(equipment_type=EquipmentType.ARMOR, defense_mitigation_bonus=3)
 
 class PlateMail(Equippable):
     def __init__(self) -> None:
-        super().__init__(equipment_type=EquipmentType.ARMOR, mitigation_bonus=5)
+        super().__init__(equipment_type=EquipmentType.ARMOR, defense_mitigation_bonus=5)
 

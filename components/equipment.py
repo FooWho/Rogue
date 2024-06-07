@@ -17,26 +17,26 @@ class Equipment(BaseComponent):
         self.armor = armor
 
     @property
-    def mitigation_bonus(self) -> int:
+    def defense_mitigation_bonus(self) -> int:
         bonus = 0
 
         if self.weapon is not None and self.weapon.equippable is not None:
-            bonus += self.weapon.equippable.mitigation_bonus
+            bonus += self.weapon.equippable.defense_mitigation_bonus
 
         if self.armor is not None and self.armor.equippable is not None:
-            bonus += self.armor.equippable.mitigation_bonus
+            bonus += self.armor.equippable.defense_mitigation_bonus
 
         return bonus
 
     @property
-    def avoidance_bonus(self) -> int:
+    def defense_avoidance_bonus(self) -> int:
         bonus = 0
 
         if self.weapon is not None and self.weapon.equippable is not None:
-            bonus += self.weapon.equippable.avoidance_bonus
+            bonus += self.weapon.equippable.defense_avoidance_bonus
 
         if self.armor is not None and self.armor.equippable is not None:
-            bonus += self.armor.equippable.avoidance_bonus
+            bonus += self.armor.equippable.defense_avoidance_bonus
 
         return 0
 

@@ -13,11 +13,11 @@ if TYPE_CHECKING:
 class Fighter(BaseComponent):
     parent: Actor
 
-    def __init__(self, hp: int, base_mitigation: int, base_avoidance: int, base_power: int):
+    def __init__(self, hp: int, base_defense_mitigation: int, base_defense_avoidance: int, base_power: int):
         self.max_hp = hp
         self._hp = hp
-        self.base_mitigation = base_mitigation
-        self.base_avoidance = base_avoidance
+        self.base_defense_mitigation = base_defense_mitigation
+        self.base_defense_avoidance = base_defense_avoidance
         self.base_power = base_power
 
     @property
@@ -31,28 +31,28 @@ class Fighter(BaseComponent):
             self.die()
 
     @property
-    def mitigation(self) -> int:
-        return self.base_mitigation + self.mitigation_bonus
+    def defense_mitigation(self) -> int:
+        return self.base_defense_mitigation + self.defense_mitigation_bonus
     
     @property
-    def avoidance(self) -> int:
-        return self.base_avoidance + self.avoidance_bonus
+    def defense_avoidance(self) -> int:
+        return self.base_defense_avoidance + self.defense_avoidance_bonus
 
     @property
     def power(self) -> int:
         return self.base_power + self.power_bonus
 
     @property
-    def mitigation_bonus(self) -> int:
+    def defense_mitigation_bonus(self) -> int:
         if self.parent.equipment:
-            return self.parent.equipment.mitigation_bonus
+            return self.parent.equipment.defense_mitigation_bonus
         else:
             return 0
         
     @property
-    def avoidance_bonus(self) -> int:
+    def defense_avoidance_bonus(self) -> int:
         if self.parent.equipment:
-            return self.parent.equipment.avoidance_bonus
+            return self.parent.equipment.defense_avoidance_bonus
         else:
             return 0
 

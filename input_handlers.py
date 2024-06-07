@@ -230,10 +230,10 @@ class CharacterScreenEventHandler(AskUserEventHandler):
             x=x + 1, y=y + 4, string=f"Attack: {self.engine.player.fighter.power}"
         )
         console.print(
-            x=x + 1, y=y + 5, string=f"Mitigation: {self.engine.player.fighter.mitigation}"
+            x=x + 1, y=y + 5, string=f"Mitigation: {self.engine.player.fighter.defense_mitigation}"
         )
         console.print(
-            x=x + 1, y=y + 6, string=f"Avoidance: {self.engine.player.fighter.avoidance}"
+            x=x + 1, y=y + 6, string=f"Avoidance: {self.engine.player.fighter.defense_avoidance}"
         )
 
 class LevelUpEventHandler(AskUserEventHandler):
@@ -274,12 +274,12 @@ class LevelUpEventHandler(AskUserEventHandler):
         console.print(
             x=x + 1,
             y=6,
-            string=f"c) Toughness (+1 mitigation, from {self.engine.player.fighter.mitigation})",
+            string=f"c) Toughness (+1 mitigation, from {self.engine.player.fighter.defense_mitigation})",
         )
         console.print(
             x=x + 1,
             y=7,
-            string=f"d) Agility (+1 avoidance, from {self.engine.player.fighter.avoidance})",
+            string=f"d) Agility (+1 avoidance, from {self.engine.player.fighter.defense_avoidance})",
         )
 
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
@@ -293,9 +293,9 @@ class LevelUpEventHandler(AskUserEventHandler):
             elif index == 1:
                 player.level.increase_power()
             elif index == 2:
-                player.level.increase_mitigation()
+                player.level.increase_defense_mitigation()
             else:
-                player.level.increase_avoidance()
+                player.level.increase_defense_avoidance()
             
         else:
             self.engine.message_log.add_message("Invalid entry.", color.invalid)
